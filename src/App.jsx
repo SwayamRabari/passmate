@@ -48,6 +48,10 @@ export default function App() {
     setStrength(strength);
   }, [length, upper, number, symbol]);
 
+  const handleLengthChange = useCallback((i) => {
+    setLength(i);
+  }, []);
+
   const handleGenerateClick = useCallback(() => {
     generatePassword();
     checkStrength();
@@ -84,9 +88,7 @@ export default function App() {
             </div>
             <div className="range mt-3.5">
               <Slider
-                onValueChange={(i) => {
-                  setLength(i);
-                }}
+                onValueChange={handleLengthChange}
                 min={4}
                 max={20}
                 defaultValue={[8]}
