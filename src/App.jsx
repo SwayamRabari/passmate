@@ -1,7 +1,7 @@
 import { Slider } from "./components/ui/slider";
 import { Switch } from "./components/ui/switch";
 import { Button } from "./components/ui/button";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ export default function App() {
   const [symbol, setSymbol] = useState(false);
   const [strength, setStrength] = useState("");
 
-  function generatePassword() {
+  const generatePassword = useCallback(() => {
     let upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let numberChars = "0123456789";
     let symbolChars = "!@#$%^&*()_+";
@@ -34,9 +34,9 @@ export default function App() {
       password += chars[randomIndex];
     }
     setPassword(password);
-  }
+  }, [length, upper, number, symbol]);
 
-  function checkStrength() {
+  const checkStrength = useCallback(() => {
     let strength = "Weak";
     if (length >= 8 && upper && number && symbol) {
       strength = "Very Strong";
@@ -46,7 +46,17 @@ export default function App() {
       strength = "Moderate";
     }
     setStrength(strength);
-  }
+  }, [length, upper, number, symbol]);
+
+  const handleGenerateClick = useCallback(() => {
+    generatePassword();
+    checkStrength();
+  }, [generatePassword, checkStrength]);
+
+  const handleCopyClick = useCallback(() => {
+    navigator.clipboard.writeText(password);
+    console.log("Copied!");
+  }, [password]);
 
   return (
     <div style={{ fontFamily: "Inter" }}>
@@ -123,8 +133,7 @@ export default function App() {
             <Button
               className="text-base"
               onClick={() => {
-                generatePassword();
-                checkStrength();
+                handleGenerateClick();
               }}
             >
               Generate
@@ -132,8 +141,7 @@ export default function App() {
             <Button
               className="text-base"
               onClick={() => {
-                navigator.clipboard.writeText(password);
-                console.log("Coiped!");
+                handleCopyClick();
               }}
             >
               Copy
