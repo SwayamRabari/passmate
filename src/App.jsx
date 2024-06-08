@@ -16,7 +16,7 @@ export default function App() {
   const [upper, setUpper] = useState(false);
   const [number, setNumber] = useState(false);
   const [symbol, setSymbol] = useState(false);
-  const [strength, setStrength] = useState("Weak");
+  const [strength, setStrength] = useState("");
 
   function generatePassword() {
     let upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

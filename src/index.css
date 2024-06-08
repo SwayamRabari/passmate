@@ -82,9 +82,9 @@ body {
   height: 100vh;
 }
 
-@media (max-width: 767px) {
+/* Media query for mobile devices */
+@media (max-width: 768px) {
   body {
-    display: flex;
     align-items: start;
   }
 }
