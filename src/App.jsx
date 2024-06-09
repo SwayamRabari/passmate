@@ -2,6 +2,7 @@ import { Slider } from "./components/ui/slider";
 import { Switch } from "./components/ui/switch";
 import { Button } from "./components/ui/button";
 import { useState, useCallback } from "react";
+import { Toaster, toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -52,6 +53,18 @@ export default function App() {
     setLength(i);
   }, []);
 
+  const toggleUpper = useCallback(() => {
+    setUpper(!upper);
+  }, [upper]);
+
+  const toggleNumber = useCallback(() => {
+    setNumber(!number);
+  }, [number]);
+
+  const toggleSymbol = useCallback(() => {
+    setSymbol(!symbol);
+  }, [symbol]);
+
   const handleGenerateClick = useCallback(() => {
     generatePassword();
     checkStrength();
@@ -59,7 +72,6 @@ export default function App() {
 
   const handleCopyClick = useCallback(() => {
     navigator.clipboard.writeText(password);
-    console.log("Copied!");
   }, [password]);
 
   return (
@@ -101,49 +113,32 @@ export default function App() {
               <label htmlFor="upper" className="text-lg font-semibold">
                 Uppercase
               </label>
-              <Switch
-                id="upper"
-                onCheckedChange={() => {
-                  setUpper(!upper);
-                }}
-              />
+              <Switch id="upper" onCheckedChange={toggleUpper} />
             </div>
             <div className="toggle flex justify-between items-center">
               <label htmlFor="number" className="text-lg font-semibold">
                 Number
               </label>
-              <Switch
-                id="number"
-                onCheckedChange={() => {
-                  setNumber(!number);
-                }}
-              />
+              <Switch id="number" onCheckedChange={toggleNumber} />
             </div>
             <div className="toggle flex justify-between items-center">
               <label htmlFor="symbol" className="text-lg font-semibold">
                 Symbol
               </label>
-              <Switch
-                id="symbol"
-                onCheckedChange={() => {
-                  setSymbol(!symbol);
-                }}
-              />
+              <Switch id="symbol" onCheckedChange={toggleSymbol} />
             </div>
           </div>
           <CardFooter className="grid grid-cols-1 gap-y-2 p-0 mt-2">
-            <Button
-              className="text-base"
-              onClick={() => {
-                handleGenerateClick();
-              }}
-            >
+            <Button className="text-base" onClick={handleGenerateClick}>
               Generate
             </Button>
             <Button
               className="text-base"
               onClick={() => {
                 handleCopyClick();
+                toast("Password copied to clipboard", {
+                  duration: 2000,
+                });
               }}
             >
               Copy
@@ -151,6 +146,14 @@ export default function App() {
           </CardFooter>
         </CardContent>
       </Card>
+      <Toaster
+        toastOptions={{
+          style: {
+            boxShadow: "none",
+            border: "1px solid #e4e4e7",
+          },
+        }}
+      />
     </div>
   );
 }
