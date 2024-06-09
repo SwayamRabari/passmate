@@ -151,6 +151,8 @@ export default function App() {
           style: {
             boxShadow: "none",
             border: "1px solid #e4e4e7",
+            fontFamily: "Inter semibold",
+            fontSize: "16px",
           },
         }}
       />
