@@ -76,7 +76,7 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "Inter" }}>
-      <Card className="w-[350px]">
+      <Card className="w-[100vw] text-3xl sm:w-[350px]">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Passmate</CardTitle>
           <CardDescription className="font-semibold text-base">
